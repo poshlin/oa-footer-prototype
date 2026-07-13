@@ -406,8 +406,8 @@ summary:focus-visible {
 }
 
 @media (min-width: 769px) {
-  .footer-group:not([open]) > ul {
-    display: grid;
+  .footer-group summary {
+    pointer-events: none;
   }
 }
 

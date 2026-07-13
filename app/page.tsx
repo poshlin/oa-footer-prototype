@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
   FaFacebookF,
   FaInstagram,
@@ -63,8 +66,26 @@ type FooterGroupProps = {
 };
 
 function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 769px)");
+    const syncWithViewport = () => setIsOpen(desktopQuery.matches);
+
+    syncWithViewport();
+    desktopQuery.addEventListener("change", syncWithViewport);
+    return () => desktopQuery.removeEventListener("change", syncWithViewport);
+  }, []);
+
   return (
-    <details className="footer-group">
+    <details
+      className="footer-group"
+      open={isOpen}
+      onToggle={(event) => {
+        const desktop = window.matchMedia("(min-width: 769px)").matches;
+        setIsOpen(desktop ? true : event.currentTarget.open);
+      }}
+    >
       <summary>
         <span>
           <small>{eyebrow}</small>
