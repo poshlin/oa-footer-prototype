@@ -8,11 +8,12 @@ import {
 } from "react-icons/fa";
 
 const courseLinks = [
-  ["課程總覽", "https://orangeapple.co/courses"],
-  ["玩創啟蒙｜1–3 年級", "https://orangeapple.co/courses/kids-coding-foundations"],
+  ["全部課程總覽", "https://orangeapple.co/courses"],
+  ["低年級啟蒙｜1–3 年級", "https://orangeapple.co/courses/kids-coding-foundations"],
   ["菁英程式｜4–12 年級", "https://orangeapple.co/courses"],
-  ["駭客學程｜證照與檢定", "https://orangeapple.co/courses/expert"],
-  ["AI 思維課程", "https://orangeapple.co/courses/ai-thinking/"],
+  ["檢定與競賽｜ITS・APCS", "https://orangeapple.co/courses/expert"],
+  ["麥思數學｜1–5 年級", "https://orangeapple.co/courses/math"],
+  ["AI 思維實戰｜5 年級以上", "https://orangeapple.co/courses/ai-thinking/"],
   ["寒暑假營隊", "https://orangeapple.co/camps"],
 ];
 
@@ -20,17 +21,18 @@ const parentLinks = [
   ["免費課程諮詢", "https://orangeapple.co/contact"],
   ["教學據點", "https://orangeapple.co/classroom"],
   ["常見問題", "https://orangeapple.co/faq"],
+  ["選課前必讀指南", "https://orangeapple.co/articles/how-to-choose-kids-coding-class"],
   ["學員作品與成果", "https://orangeapple.co/projects"],
-  ["查看完整客服時段", "https://orangeapple.co/contact"],
+  ["家長／學員登入", "https://orangeapple.co/users/sign_in"],
 ];
 
 const aboutLinks = [
-  ["品牌故事", "https://orangeapple.co/about/"],
+  ["關於橘子蘋果", "https://orangeapple.co/about/"],
   ["橘蘋觀點", "https://orangeapple.co/articles"],
+  ["社會責任", "https://orangeapple.co/csr"],
   ["學校夥伴", "https://orangeapple.co/partners"],
   ["合作機會", "https://orangeapple.co/cooperation"],
-  ["師資招募", "https://orangeapple.co/jobs"],
-  ["社會責任", "https://orangeapple.co/csr"],
+  ["加入橘蘋／師資招募", "https://orangeapple.co/jobs"],
 ];
 
 const socials = [
@@ -39,12 +41,6 @@ const socials = [
     href: "https://www.facebook.com/OrangeAppleTW",
     icon: <FaFacebookF aria-hidden="true" />,
     className: "facebook",
-  },
-  {
-    label: "LINE 官方帳號",
-    href: "https://line.me/R/ti/p/@291npklp",
-    icon: <FaLine aria-hidden="true" />,
-    className: "line",
   },
   {
     label: "Instagram",
@@ -122,7 +118,7 @@ export default function Home() {
             </p>
 
             <div className="contact-actions">
-              <a className="line-button" href="https://line.me/R/ti/p/@291npklp" target="_blank" rel="noopener noreferrer">
+              <a className="line-button" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer">
                 <FaLine aria-hidden="true" />
                 <span>LINE 課程諮詢</span>
               </a>
@@ -137,33 +133,39 @@ export default function Home() {
               <a href="https://orangeapple.co/contact">查看完整時段</a>
             </p>
 
-            <nav className="social-links" aria-label="橘子蘋果社群平台">
-              {socials.map((social) => (
-                <a
-                  key={social.label}
-                  className={`social-link social-link--${social.className}`}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`前往橘子蘋果 ${social.label}`}
-                  title={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </nav>
+            <div className="social-area">
+              <p className="social-heading">追蹤橘蘋</p>
+              <nav className="social-links" aria-label="橘子蘋果社群平台">
+                {socials.map((social) => (
+                  <a
+                    key={social.label}
+                    className={`social-link social-link--${social.className}`}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`前往橘子蘋果 ${social.label}`}
+                    title={social.label}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </nav>
+            </div>
           </section>
 
           <nav className="footer-navigation" aria-label="頁尾導覽">
-            <FooterGroup eyebrow="EXPLORE" title="找適合的課程" links={courseLinks} />
-            <FooterGroup eyebrow="FOR PARENTS" title="家長服務" links={parentLinks} />
-            <FooterGroup eyebrow="ABOUT US" title="關於橘蘋" links={aboutLinks} />
+            <FooterGroup eyebrow="COURSES" title="課程探索" links={courseLinks} />
+            <FooterGroup eyebrow="FOR PARENTS" title="家長專區" links={parentLinks} />
+            <FooterGroup eyebrow="ABOUT" title="認識橘蘋" links={aboutLinks} />
           </nav>
         </div>
 
         <div className="footer-container footer-bottom">
           <p>© {year} 橘子蘋果程式學苑</p>
-          <p className="footer-footnote">全台 12 縣市直營・線上覆蓋 22 縣市</p>
+          <nav className="footer-presence" aria-label="服務地區">
+            <a href="https://orangeapple.co/classroom">全台 12 縣市直營・線上覆蓋 22 縣市</a>
+            <a href="https://orangeapple.co/my/">馬來西亞分校</a>
+          </nav>
           <nav aria-label="法律資訊">
             <a href="https://orangeapple.co/privacy">隱私權政策</a>
             <a href="https://orangeapple.co/terms">上課條款</a>
