@@ -384,12 +384,6 @@ summary:focus-visible {
   gap: 18px;
 }
 
-.footer-presence a + a::before {
-  margin-right: 18px;
-  color: rgba(255, 255, 255, 0.24);
-  content: "｜";
-}
-
 .footer-bottom nav {
   display: flex;
   gap: 22px;

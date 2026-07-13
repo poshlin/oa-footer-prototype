@@ -164,7 +164,6 @@ export default function Home() {
           <p>© {year} 橘子蘋果程式學苑</p>
           <nav className="footer-presence" aria-label="服務地區">
             <a href="https://orangeapple.co/classroom">全台 12 縣市直營・線上覆蓋 22 縣市</a>
-            <a href="https://orangeapple.co/my/">馬來西亞分校</a>
           </nav>
           <nav aria-label="法律資訊">
             <a href="https://orangeapple.co/privacy">隱私權政策</a>
