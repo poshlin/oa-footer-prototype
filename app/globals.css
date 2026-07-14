@@ -3,6 +3,7 @@
 :root {
   --orange: #ffa300;
   --orange-deep: #ff8a00;
+  --apple-red: #ff5859;
   --coral: #ff6f61;
   --teal: #00c4b3;
   --line-green: #06c755;
@@ -37,6 +38,7 @@ a {
 }
 
 a:focus-visible,
+button:focus-visible,
 summary:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 4px;
@@ -175,7 +177,7 @@ summary:focus-visible {
 
 .line-button,
 .phone-link {
-  min-height: 48px;
+  min-height: 56px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -201,8 +203,10 @@ summary:focus-visible {
 }
 
 .phone-link {
-  padding: 0 4px;
-  color: var(--footer-text);
+  padding: 0 18px;
+  color: var(--ink);
+  background: var(--apple-red);
+  box-shadow: 0 10px 30px rgba(255, 88, 89, 0.18);
 }
 
 .line-button:hover {
@@ -212,19 +216,55 @@ summary:focus-visible {
 }
 
 .phone-link:hover {
-  color: var(--focus);
+  transform: translateY(-2px);
+  color: var(--ink);
+  background: #ff7475;
+}
+
+.phone-copy {
+  display: grid;
+  gap: 1px;
+  line-height: 1.15;
+}
+
+.phone-copy strong {
+  font-size: 14px;
+}
+
+.phone-copy small {
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .service-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 9px;
   margin: 18px 0 26px;
   color: var(--footer-dim);
   font-size: 13px;
   line-height: 1.8;
 }
 
-.service-note a {
+.service-note button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
   color: var(--footer-muted);
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.service-note button:hover {
+  color: #fff;
 }
 
 .social-area {
@@ -416,6 +456,247 @@ summary:focus-visible {
   color: #fff;
 }
 
+body:has(.service-dialog[open]) {
+  overflow: hidden;
+}
+
+.service-dialog {
+  width: min(920px, calc(100% - 32px));
+  max-height: min(88vh, 780px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
+  color: var(--ink);
+  background: #f5f7fa;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+  overflow: auto;
+}
+
+.service-dialog::backdrop {
+  background: rgba(7, 10, 16, 0.74);
+  backdrop-filter: blur(5px);
+}
+
+.service-dialog__panel {
+  padding: 30px;
+}
+
+.service-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.service-dialog__eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #9a5a00;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.service-dialog h2,
+.service-dialog h3,
+.service-dialog h4,
+.service-dialog p {
+  margin: 0;
+}
+
+.service-dialog h2 {
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.25;
+}
+
+.service-dialog__header p {
+  margin-top: 7px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.dialog-close {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d8dde6;
+  border-radius: 50%;
+  color: #3d4654;
+  background: #fff;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.dialog-close:hover {
+  color: var(--ink);
+  border-color: #aeb6c3;
+}
+
+.service-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.service-card {
+  overflow: hidden;
+  border: 1px solid #e1e5ec;
+  border-top: 4px solid var(--orange);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.service-card--online {
+  border-top-color: var(--teal);
+}
+
+.service-card__heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.service-card__icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  color: #754500;
+  background: #fff1d5;
+  font-size: 18px;
+}
+
+.service-card--online .service-card__icon {
+  color: #006d64;
+  background: #d9fbf7;
+}
+
+.service-card__heading h3 {
+  font-size: 19px;
+}
+
+.service-card__heading p {
+  margin-top: 3px;
+  color: #788291;
+  font-size: 12px;
+}
+
+.service-card__channels {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.service-channel {
+  padding: 14px;
+  border-radius: 14px;
+  background: #f7f8fa;
+}
+
+.service-channel__title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px !important;
+  color: #374151;
+  font-size: 13px;
+}
+
+.service-channel__title--phone svg {
+  color: #d9383f;
+}
+
+.service-channel__title--line svg {
+  color: var(--line-green);
+  font-size: 16px;
+}
+
+.schedule-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.schedule-list > div {
+  min-height: 34px;
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #e6e9ee;
+}
+
+.schedule-list > div:first-child {
+  border-top: 0;
+}
+
+.schedule-list dt,
+.schedule-list dd {
+  margin: 0;
+  font-size: 13px;
+}
+
+.schedule-list dt {
+  color: #697386;
+}
+
+.schedule-list dd {
+  color: #18202c;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.service-dialog__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.dialog-action {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 16px;
+  border-radius: 14px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+}
+
+.dialog-action--phone {
+  background: var(--apple-red);
+}
+
+.dialog-action--line {
+  border: 1px solid #d8dde6;
+  background: #fff;
+}
+
+.dialog-action--line svg {
+  color: var(--line-green);
+  font-size: 18px;
+}
+
+.dialog-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(18, 21, 30, 0.1);
+}
+
 .summary-icon {
   display: none;
 }
@@ -487,7 +768,8 @@ summary:focus-visible {
   }
 
   .phone-link {
-    background: rgba(255,255,255,0.06);
+    border-color: transparent;
+    background: var(--apple-red);
   }
 
   .social-links {
@@ -567,6 +849,26 @@ summary:focus-visible {
   .footer-bottom nav {
     order: -1;
     gap: 24px;
+  }
+
+  .service-dialog {
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    margin: auto 0 0;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .service-dialog__panel {
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .service-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-dialog__actions {
+    grid-template-columns: 1fr;
   }
 }
 

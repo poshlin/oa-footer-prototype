@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  FaBuilding,
+  FaClock,
   FaFacebookF,
   FaInstagram,
+  FaLaptop,
   FaLine,
   FaPhoneAlt,
+  FaTimes,
   FaYoutube,
 } from "react-icons/fa";
 
@@ -57,6 +61,56 @@ const socials = [
     href: "https://www.youtube.com/@OrangeAppleTW",
     icon: <FaYoutube aria-hidden="true" />,
     className: "youtube",
+  },
+];
+
+const serviceSchedules = [
+  {
+    id: "onsite",
+    title: "實體課程",
+    subtitle: "教室與實體班客服",
+    icon: <FaBuilding aria-hidden="true" />,
+    channels: [
+      {
+        type: "phone",
+        label: "專線電話",
+        rows: [
+          ["週一", "12:00–18:00"],
+          ["週二至週五", "12:00–21:00"],
+          ["週六", "09:30–21:00"],
+          ["週日", "09:30–17:00"],
+        ],
+      },
+      {
+        type: "line",
+        label: "官方 LINE",
+        rows: [["週二至週六", "12:00–21:00"]],
+      },
+    ],
+  },
+  {
+    id: "online",
+    title: "線上課程",
+    subtitle: "線上班與遠距學習客服",
+    icon: <FaLaptop aria-hidden="true" />,
+    channels: [
+      {
+        type: "phone",
+        label: "專線電話",
+        rows: [
+          ["週一至週五", "13:00–21:00"],
+          ["週六、週日", "10:00–17:00"],
+        ],
+      },
+      {
+        type: "line",
+        label: "官方 LINE",
+        rows: [
+          ["週一至週五", "13:00–21:00"],
+          ["週六、週日", "13:00–17:00"],
+        ],
+      },
+    ],
   },
 ];
 
@@ -119,6 +173,11 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
 
 export default function Home() {
   const year = new Date().getFullYear();
+  const serviceDialogRef = useRef<HTMLDialogElement>(null);
+  const serviceHoursTriggerRef = useRef<HTMLButtonElement>(null);
+
+  const openServiceHours = () => serviceDialogRef.current?.showModal();
+  const closeServiceHours = () => serviceDialogRef.current?.close();
 
   return (
     <main>
@@ -158,14 +217,20 @@ export default function Home() {
               </a>
               <a className="phone-link" href="tel:0277098229">
                 <FaPhoneAlt aria-hidden="true" />
-                <span>(02) 7709-8229</span>
+                <span className="phone-copy">
+                  <strong>立即來電</strong>
+                  <small>(02) 7709-8229</small>
+                </span>
               </a>
             </div>
 
-            <p className="service-note">
-              實體與線上客服時段不同，
-              <a href="https://orangeapple.co/contact">查看完整時段</a>
-            </p>
+            <div className="service-note">
+              <span>客服時段依課程類型而異</span>
+              <button ref={serviceHoursTriggerRef} type="button" onClick={openServiceHours}>
+                <FaClock aria-hidden="true" />
+                查看服務時間
+              </button>
+            </div>
 
             <div className="social-area">
               <p className="social-heading">追蹤橘蘋</p>
@@ -204,6 +269,74 @@ export default function Home() {
             <a href="https://orangeapple.co/terms">上課條款</a>
           </nav>
         </div>
+
+        <dialog
+          ref={serviceDialogRef}
+          className="service-dialog"
+          aria-labelledby="service-dialog-title"
+          aria-describedby="service-dialog-description"
+          onClose={() => serviceHoursTriggerRef.current?.focus()}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeServiceHours();
+          }}
+        >
+          <div className="service-dialog__panel">
+            <header className="service-dialog__header">
+              <div>
+                <span className="service-dialog__eyebrow">SERVICE HOURS</span>
+                <h2 id="service-dialog-title">客服服務時間</h2>
+                <p id="service-dialog-description">請依課程類型與聯絡方式查看服務時段</p>
+              </div>
+              <button className="dialog-close" type="button" onClick={closeServiceHours} aria-label="關閉客服服務時間">
+                <FaTimes aria-hidden="true" />
+              </button>
+            </header>
+
+            <div className="service-card-grid">
+              {serviceSchedules.map((service) => (
+                <section key={service.id} className={`service-card service-card--${service.id}`}>
+                  <div className="service-card__heading">
+                    <span className="service-card__icon">{service.icon}</span>
+                    <div>
+                      <h3>{service.title}</h3>
+                      <p>{service.subtitle}</p>
+                    </div>
+                  </div>
+
+                  <div className="service-card__channels">
+                    {service.channels.map((channel) => (
+                      <section key={`${service.id}-${channel.type}`} className="service-channel">
+                        <h4 className={`service-channel__title service-channel__title--${channel.type}`}>
+                          {channel.type === "phone" ? <FaPhoneAlt aria-hidden="true" /> : <FaLine aria-hidden="true" />}
+                          {channel.label}
+                        </h4>
+                        <dl className="schedule-list">
+                          {channel.rows.map(([days, hours]) => (
+                            <div key={`${days}-${hours}`}>
+                              <dt>{days}</dt>
+                              <dd>{hours}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </section>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            <div className="service-dialog__actions">
+              <a className="dialog-action dialog-action--phone" href="tel:0277098229">
+                <FaPhoneAlt aria-hidden="true" />
+                立即撥打 (02) 7709-8229
+              </a>
+              <a className="dialog-action dialog-action--line" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer">
+                <FaLine aria-hidden="true" />
+                開啟 LINE 課程諮詢
+              </a>
+            </div>
+          </div>
+        </dialog>
       </footer>
     </main>
   );
