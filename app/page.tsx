@@ -266,11 +266,15 @@ export default function Home() {
             <nav className="footer-tools" aria-label="客服快速連結">
               <button ref={lineDirectoryTriggerRef} type="button" onClick={openPhysicalLineDirectory} aria-haspopup="dialog">
                 <FaMapMarkerAlt aria-hidden="true" />
-                查找各教室 LINE
+                實體課程 LINE
               </button>
+              <a href={onlineLine.href} target="_blank" rel="noopener noreferrer" aria-label={`加入線上課程 LINE ${onlineLine.account}`}>
+                <FaLaptop aria-hidden="true" />
+                線上課程 LINE
+              </a>
               <button ref={serviceHoursTriggerRef} type="button" onClick={openServiceHours} aria-haspopup="dialog">
                 <FaClock aria-hidden="true" />
-                查看客服時間
+                客服時間
               </button>
             </nav>
 

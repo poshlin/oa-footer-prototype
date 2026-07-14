@@ -234,13 +234,16 @@ summary:focus-visible {
 }
 
 .footer-tools {
+  width: min(100%, 312px);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 14px;
+  justify-content: space-between;
+  gap: 4px 8px;
   margin: 14px 0 26px;
 }
 
+.footer-tools a,
 .footer-tools button {
   min-height: 44px;
   display: inline-flex;
@@ -251,22 +254,26 @@ summary:focus-visible {
   color: var(--footer-muted);
   background: transparent;
   font: inherit;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  cursor: pointer;
+  white-space: nowrap;
   text-decoration: underline;
   text-underline-offset: 4px;
+  cursor: pointer;
 }
 
+.footer-tools a svg,
 .footer-tools button svg {
   color: var(--footer-dim);
   font-size: 12px;
 }
 
+.footer-tools a:hover,
 .footer-tools button:hover {
   color: #fff;
 }
 
+.footer-tools a:hover svg,
 .footer-tools button:hover svg { color: var(--orange); }
 
 .social-area {
