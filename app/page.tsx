@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
+  FaArrowLeft,
   FaBuilding,
   FaClock,
   FaFacebookF,
@@ -203,22 +204,46 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
 export default function Home() {
   const year = new Date().getFullYear();
   const [lineDirectoryMode, setLineDirectoryMode] = useState<"physical" | "all">("physical");
+  const [lineDirectoryOrigin, setLineDirectoryOrigin] = useState<"footer" | "service-onsite" | "service-all">("footer");
   const serviceDialogRef = useRef<HTMLDialogElement>(null);
   const serviceHoursTriggerRef = useRef<HTMLButtonElement>(null);
+  const onsiteLineTriggerRef = useRef<HTMLButtonElement>(null);
+  const serviceLineTriggerRef = useRef<HTMLButtonElement>(null);
   const lineDialogRef = useRef<HTMLDialogElement>(null);
   const lineDirectoryTriggerRef = useRef<HTMLButtonElement>(null);
+  const returningToServiceRef = useRef(false);
 
   const openServiceHours = () => serviceDialogRef.current?.showModal();
   const closeServiceHours = () => serviceDialogRef.current?.close();
   const openPhysicalLineDirectory = () => {
     setLineDirectoryMode("physical");
+    setLineDirectoryOrigin("footer");
+    returningToServiceRef.current = false;
     requestAnimationFrame(() => lineDialogRef.current?.showModal());
   };
-  const closeLineRouting = () => lineDialogRef.current?.close();
-  const openLineDirectoryFromService = (mode: "physical" | "all") => {
+  const closeLineRouting = () => {
+    returningToServiceRef.current = false;
+    lineDialogRef.current?.close();
+  };
+  const openLineDirectoryFromService = (mode: "physical" | "all", origin: "service-onsite" | "service-all") => {
     setLineDirectoryMode(mode);
+    setLineDirectoryOrigin(origin);
+    returningToServiceRef.current = false;
     serviceDialogRef.current?.close();
     requestAnimationFrame(() => lineDialogRef.current?.showModal());
+  };
+  const backToServiceHours = () => {
+    returningToServiceRef.current = true;
+    lineDialogRef.current?.close();
+    requestAnimationFrame(() => {
+      serviceDialogRef.current?.showModal();
+      requestAnimationFrame(() => {
+        const returnTarget = lineDirectoryOrigin === "service-onsite"
+          ? onsiteLineTriggerRef.current
+          : serviceLineTriggerRef.current;
+        returnTarget?.focus();
+      });
+    });
   };
 
   return (
@@ -366,7 +391,12 @@ export default function Home() {
                           ))}
                         </dl>
                         {channel.type === "line" && service.id === "onsite" && (
-                          <button className="service-channel__action" type="button" onClick={() => openLineDirectoryFromService("physical")}>
+                          <button
+                            ref={onsiteLineTriggerRef}
+                            className="service-channel__action"
+                            type="button"
+                            onClick={() => openLineDirectoryFromService("physical", "service-onsite")}
+                          >
                             選擇上課地區 LINE <span aria-hidden="true">→</span>
                           </button>
                         )}
@@ -387,7 +417,12 @@ export default function Home() {
                 <FaPhoneAlt aria-hidden="true" />
                 (02) 7709-8229
               </a>
-              <button className="dialog-action dialog-action--line" type="button" onClick={() => openLineDirectoryFromService("all")}>
+              <button
+                ref={serviceLineTriggerRef}
+                className="dialog-action dialog-action--line"
+                type="button"
+                onClick={() => openLineDirectoryFromService("all", "service-all")}
+              >
                 <FaLine aria-hidden="true" />
                 查找對應 LINE
               </button>
@@ -400,7 +435,10 @@ export default function Home() {
           className="service-dialog line-routing-dialog"
           aria-labelledby="line-dialog-title"
           aria-describedby="line-dialog-description"
-          onClose={() => lineDirectoryTriggerRef.current?.focus()}
+          onClose={() => {
+            if (!returningToServiceRef.current) lineDirectoryTriggerRef.current?.focus();
+            returningToServiceRef.current = false;
+          }}
           onClick={(event) => {
             if (event.target === event.currentTarget) closeLineRouting();
           }}
@@ -408,6 +446,12 @@ export default function Home() {
           <div className="service-dialog__panel">
             <header className="service-dialog__header">
               <div>
+                {lineDirectoryOrigin !== "footer" && (
+                  <button className="dialog-back" type="button" onClick={backToServiceHours}>
+                    <FaArrowLeft aria-hidden="true" />
+                    返回客服時間
+                  </button>
+                )}
                 <span className="service-dialog__eyebrow">LINE DIRECTORY</span>
                 <h2 id="line-dialog-title">{lineDirectoryMode === "physical" ? "查找教室 LINE" : "選擇 LINE 諮詢管道"}</h2>
                 <p id="line-dialog-description">

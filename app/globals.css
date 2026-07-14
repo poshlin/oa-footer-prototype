@@ -512,6 +512,37 @@ body:has(dialog[open]) {
   font-size: 14px;
 }
 
+.dialog-back {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: -8px 0 4px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 8px;
+  color: #4b5565;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dialog-back svg {
+  color: var(--orange);
+}
+
+.dialog-back:hover {
+  color: var(--ink);
+  background: #fff;
+}
+
+.dialog-back:focus-visible {
+  outline: 3px solid rgba(255, 168, 0, 0.42);
+  outline-offset: 2px;
+}
+
 .dialog-close {
   width: 44px;
   height: 44px;
@@ -1072,6 +1103,17 @@ body:has(dialog[open]) {
 
   .line-routing-dialog .service-dialog__panel {
     padding-inline: 16px;
+  }
+
+  .line-routing-dialog .service-dialog__header {
+    position: sticky;
+    top: -24px;
+    z-index: 2;
+    margin: -24px -16px 18px;
+    padding: 24px 16px 14px;
+    border-bottom: 1px solid #e1e5ec;
+    background: rgba(245, 247, 250, 0.96);
+    backdrop-filter: blur(8px);
   }
 
   .line-route-link {
