@@ -169,21 +169,21 @@ summary:focus-visible {
 }
 
 .contact-actions {
-  width: min(100%, 340px);
+  width: min(100%, 312px);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .line-button,
 .phone-link {
-  min-height: 50px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  border-radius: 12px;
-  font-size: 14px;
+  gap: 8px;
+  border-radius: 11px;
+  font-size: 13px;
   font-weight: 800;
   white-space: nowrap;
   text-decoration: none;
@@ -193,7 +193,7 @@ summary:focus-visible {
 .line-button,
 .phone-link {
   width: 100%;
-  padding: 0 14px;
+  padding: 0 12px;
   border: 1px solid #d8dde6;
   color: var(--ink);
   background: #fff;
@@ -207,7 +207,7 @@ summary:focus-visible {
 
 .line-button svg {
   color: var(--line-green);
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .phone-link {
@@ -216,7 +216,7 @@ summary:focus-visible {
 
 .phone-link svg {
   color: var(--apple-red);
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .line-button:hover {
@@ -954,12 +954,11 @@ body:has(dialog[open]) {
   }
 
   .contact-actions {
-    width: 100%;
-    gap: 10px;
+    gap: 8px;
   }
 
   .line-button,
-  .phone-link { padding-inline: 12px; }
+  .phone-link { padding-inline: 10px; }
 
   .social-links {
     gap: 10px;
