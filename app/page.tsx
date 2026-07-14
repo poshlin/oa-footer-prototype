@@ -4,15 +4,20 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   FaArrowLeft,
+  FaBars,
+  FaBookOpen,
   FaBuilding,
+  FaChevronDown,
   FaClock,
   FaFacebookF,
+  FaGraduationCap,
   FaInstagram,
   FaLaptop,
   FaLine,
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaTimes,
+  FaUser,
   FaYoutube,
 } from "react-icons/fa";
 
@@ -43,6 +48,37 @@ const aboutLinks = [
   ["學校夥伴", "https://orangeapple.co/partners"],
   ["合作機會", "https://orangeapple.co/cooperation"],
   ["加入橘蘋／師資招募", "https://orangeapple.co/jobs"],
+];
+
+const navCourseGroups = [
+  {
+    eyebrow: "國小 1–3 年級",
+    title: "從興趣開始啟蒙",
+    description: "用故事、積木與遊戲建立第一套程式邏輯。",
+    links: [
+      ["玩創程式啟蒙", "https://orangeapple.co/courses/kids-coding-foundations"],
+      ["麥思數學｜1–6 年級", "https://orangeapple.co/courses/math"],
+    ],
+  },
+  {
+    eyebrow: "國小 4 年級–高中",
+    title: "建立完整程式能力",
+    description: "從 Scratch、Python 一路銜接網頁、演算法與 AI。",
+    links: [
+      ["菁英程式課程｜4–12 年級", "https://orangeapple.co/courses"],
+      ["AI 思維實戰｜5 年級以上", "https://orangeapple.co/courses/ai-thinking/"],
+    ],
+  },
+  {
+    eyebrow: "進階・檢定・競賽",
+    title: "把能力變成升學成果",
+    description: "依基礎銜接國際認證、APCS 與長期競賽訓練。",
+    links: [
+      ["進階程式與認證學程", "https://orangeapple.co/courses/expert"],
+      ["APCS 程式升學檢定班", "https://orangeapple.co/courses/apcs"],
+      ["橘蘋選手班｜7 年級以上", "https://orangeapple.co/courses/contestant"],
+    ],
+  },
 ];
 
 const socials = [
@@ -203,6 +239,8 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
 
 export default function Home() {
   const year = new Date().getFullYear();
+  const [openMenu, setOpenMenu] = useState<"courses" | "camps" | "locations" | "parents" | null>(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [lineDirectoryMode, setLineDirectoryMode] = useState<"physical" | "all">("physical");
   const [lineDirectoryOrigin, setLineDirectoryOrigin] = useState<"footer" | "service-onsite" | "service-all">("footer");
   const serviceDialogRef = useRef<HTMLDialogElement>(null);
@@ -212,6 +250,33 @@ export default function Home() {
   const lineDialogRef = useRef<HTMLDialogElement>(null);
   const lineDirectoryTriggerRef = useRef<HTMLButtonElement>(null);
   const returningToServiceRef = useRef(false);
+
+  const closeNavigation = () => {
+    setOpenMenu(null);
+    setMobileNavOpen(false);
+  };
+  const toggleMenu = (menu: "courses" | "camps" | "locations" | "parents") => {
+    setOpenMenu((current) => current === menu ? null : menu);
+  };
+
+  useEffect(() => {
+    const closeWithEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeNavigation();
+    };
+    const desktopQuery = window.matchMedia("(min-width: 961px)");
+    const closeMobileAtDesktop = () => {
+      if (desktopQuery.matches) setMobileNavOpen(false);
+    };
+
+    document.addEventListener("keydown", closeWithEscape);
+    desktopQuery.addEventListener("change", closeMobileAtDesktop);
+    document.body.classList.toggle("nav-open", mobileNavOpen);
+    return () => {
+      document.removeEventListener("keydown", closeWithEscape);
+      desktopQuery.removeEventListener("change", closeMobileAtDesktop);
+      document.body.classList.remove("nav-open");
+    };
+  }, [mobileNavOpen]);
 
   const openServiceHours = () => serviceDialogRef.current?.showModal();
   const closeServiceHours = () => serviceDialogRef.current?.close();
@@ -248,10 +313,137 @@ export default function Home() {
 
   return (
     <main>
+      <header className="site-header">
+        <div className="utility-bar">
+          <div className="nav-container utility-bar__inner">
+            <p><span aria-hidden="true">●</span> 全台 12 縣市・44 間教室・線上不限地區</p>
+            <nav aria-label="快速連結">
+              <a href="https://orangeapple.co/faq">常見問題</a>
+              <a href="https://orangeapple.co/contact">聯絡我們</a>
+              <a href="https://orangeapple.co/users/sign_in">家長／學員登入</a>
+            </nav>
+          </div>
+        </div>
+
+        <div className="primary-nav">
+          <div className="nav-container nav-shell">
+            <a className="nav-logo" href="https://orangeapple.co/" aria-label="橘子蘋果程式學苑首頁">
+              <Image src="/logo-2023-white.svg" alt="橘子蘋果程式學苑" width={220} height={52} priority />
+            </a>
+
+            <button
+              className="mobile-nav-toggle"
+              type="button"
+              onClick={() => setMobileNavOpen(true)}
+              aria-label="開啟主選單"
+              aria-expanded={mobileNavOpen}
+              aria-controls="main-navigation"
+            >
+              <FaBars aria-hidden="true" />
+            </button>
+
+            <nav id="main-navigation" className={`main-navigation ${mobileNavOpen ? "is-open" : ""}`} aria-label="主要導覽">
+              <div className="mobile-nav-header">
+                <Image src="/logo-2023-white.svg" alt="橘子蘋果程式學苑" width={190} height={45} />
+                <button type="button" onClick={closeNavigation} aria-label="關閉主選單"><FaTimes aria-hidden="true" /></button>
+              </div>
+
+              <div className="nav-item">
+                <button className="nav-trigger" type="button" onClick={() => toggleMenu("courses")} aria-expanded={openMenu === "courses"} aria-controls="courses-menu">
+                  課程探索 <FaChevronDown aria-hidden="true" />
+                </button>
+                <section id="courses-menu" className={`mega-menu course-mega ${openMenu === "courses" ? "is-open" : ""}`} aria-label="課程探索選單">
+                  <div className="mega-menu__heading">
+                    <div><span>COURSE GUIDE</span><h2>從孩子的年級與目標開始選</h2></div>
+                    <a href="https://orangeapple.co/courses" onClick={closeNavigation}>查看全部課程 <span aria-hidden="true">→</span></a>
+                  </div>
+                  <div className="course-mega__grid">
+                    {navCourseGroups.map((group) => (
+                      <article className="course-nav-card" key={group.eyebrow}>
+                        <span className="course-nav-card__eyebrow">{group.eyebrow}</span>
+                        <h3>{group.title}</h3>
+                        <p>{group.description}</p>
+                        <ul>
+                          {group.links.map(([label, href]) => <li key={label}><a href={href} onClick={closeNavigation}>{label}<span aria-hidden="true">→</span></a></li>)}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+                  <a className="nav-assist" href="https://orangeapple.co/contact" onClick={closeNavigation}>
+                    <FaGraduationCap aria-hidden="true" />
+                    <span><strong>不確定孩子適合哪一堂？</strong><small>讓課程顧問依年級、程度與目標提供建議</small></span>
+                    <span aria-hidden="true">免費諮詢 →</span>
+                  </a>
+                </section>
+              </div>
+
+              <div className="nav-item">
+                <button className="nav-trigger" type="button" onClick={() => toggleMenu("camps")} aria-expanded={openMenu === "camps"} aria-controls="camps-menu">
+                  寒暑假營隊 <FaChevronDown aria-hidden="true" />
+                </button>
+                <section id="camps-menu" className={`mega-menu compact-mega ${openMenu === "camps" ? "is-open" : ""}`} aria-label="寒暑假營隊選單">
+                  <div className="compact-mega__intro compact-mega__intro--camp">
+                    <span>2026 SUMMER CAMP</span><h2>把假期變成孩子的作品</h2><p>依年級快速找到程式、AI、數學與創客營隊。</p>
+                    <a href="https://orangeapple.co/camps" onClick={closeNavigation}>查看 2026 暑假營隊 <span aria-hidden="true">→</span></a>
+                  </div>
+                  <div className="compact-mega__links">
+                    <a href="https://orangeapple.co/camps" onClick={closeNavigation}><strong>2–4 年級</strong><span>小小創客・財商數學</span></a>
+                    <a href="https://orangeapple.co/camps" onClick={closeNavigation}><strong>3–7 年級</strong><span>Minecraft・Roblox 創作</span></a>
+                    <a href="https://orangeapple.co/camps" onClick={closeNavigation}><strong>7–12 年級</strong><span>Python・AI・APCS</span></a>
+                  </div>
+                </section>
+              </div>
+
+              <div className="nav-item">
+                <button className="nav-trigger" type="button" onClick={() => toggleMenu("locations")} aria-expanded={openMenu === "locations"} aria-controls="locations-menu">
+                  上課方式與據點 <FaChevronDown aria-hidden="true" />
+                </button>
+                <section id="locations-menu" className={`mega-menu compact-mega location-mega ${openMenu === "locations" ? "is-open" : ""}`} aria-label="上課方式與據點選單">
+                  <a className="location-choice" href="https://orangeapple.co/classroom" onClick={closeNavigation}>
+                    <span className="location-choice__icon"><FaMapMarkerAlt aria-hidden="true" /></span>
+                    <span><small>實體課程</small><strong>全台 12 縣市・44 間教室</strong><span>搜尋離家最近的上課據點</span></span><b aria-hidden="true">→</b>
+                  </a>
+                  <a className="location-choice location-choice--online" href="https://orangeapple.co/campaigns/online" onClick={closeNavigation}>
+                    <span className="location-choice__icon"><FaLaptop aria-hidden="true" /></span>
+                    <span><small>線上課程</small><strong>不限地區，在家也能開始</strong><span>雙師教學與即時一對一引導</span></span><b aria-hidden="true">→</b>
+                  </a>
+                </section>
+              </div>
+
+              <div className="nav-item">
+                <button className="nav-trigger" type="button" onClick={() => toggleMenu("parents")} aria-expanded={openMenu === "parents"} aria-controls="parents-menu">
+                  家長資源 <FaChevronDown aria-hidden="true" />
+                </button>
+                <section id="parents-menu" className={`mega-menu compact-mega resources-mega ${openMenu === "parents" ? "is-open" : ""}`} aria-label="家長資源選單">
+                  <div className="resource-column">
+                    <span>選課與學習</span>
+                    <a href="https://orangeapple.co/articles/how-to-choose-kids-coding-class" onClick={closeNavigation}><FaBookOpen aria-hidden="true" /><span><strong>選課前必讀指南</strong><small>先釐清年級、目標與課程差異</small></span></a>
+                    <a href="https://orangeapple.co/faq" onClick={closeNavigation}><FaClock aria-hidden="true" /><span><strong>常見問題</strong><small>試聽、設備、請假與上課方式</small></span></a>
+                    <a href="https://orangeapple.co/projects" onClick={closeNavigation}><FaGraduationCap aria-hidden="true" /><span><strong>學員作品與成果</strong><small>看看孩子真正能完成什麼</small></span></a>
+                  </div>
+                  <div className="resource-column resource-column--more">
+                    <span>認識橘蘋</span>
+                    <a href="https://orangeapple.co/about/" onClick={closeNavigation}>關於橘子蘋果</a>
+                    <a href="https://orangeapple.co/articles" onClick={closeNavigation}>橘蘋觀點</a>
+                    <a href="https://orangeapple.co/partners" onClick={closeNavigation}>學校夥伴</a>
+                    <a href="https://orangeapple.co/cooperation" onClick={closeNavigation}>合作機會</a>
+                    <a href="https://orangeapple.co/jobs" onClick={closeNavigation}>加入橘蘋／師資招募</a>
+                  </div>
+                </section>
+              </div>
+
+              <a className="nav-login" href="https://orangeapple.co/users/sign_in" onClick={closeNavigation}><FaUser aria-hidden="true" /> 登入</a>
+              <a className="nav-cta" href="https://orangeapple.co/contact" onClick={closeNavigation}>預約免費體驗</a>
+            </nav>
+          </div>
+        </div>
+        <button className={`nav-backdrop ${mobileNavOpen ? "is-open" : ""}`} type="button" onClick={closeNavigation} aria-label="關閉主選單" tabIndex={mobileNavOpen ? 0 : -1} />
+      </header>
+
       <section className="preview-context" aria-label="頁面結尾示意">
         <div className="preview-context__inner">
-          <span className="prototype-tag">FOOTER PROTOTYPE</span>
-          <p>這裡是網站內容的最後一段</p>
+          <span className="prototype-tag">NAV + FOOTER PROTOTYPE</span>
+          <p>請操作上方導覽選單，或向下檢視 Footer</p>
           <span className="preview-arrow" aria-hidden="true">↓</span>
         </div>
       </section>
