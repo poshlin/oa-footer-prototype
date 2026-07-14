@@ -211,16 +211,13 @@ export default function Home() {
             </p>
 
             <div className="contact-actions">
-              <a className="line-button" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer">
+              <a className="line-button" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer" aria-label="前往 LINE 課程諮詢">
                 <FaLine aria-hidden="true" />
                 <span>LINE 課程諮詢</span>
               </a>
-              <a className="phone-link" href="tel:0277098229">
+              <a className="phone-link" href="tel:0277098229" aria-label="撥打電話 (02) 7709-8229">
                 <FaPhoneAlt aria-hidden="true" />
-                <span className="phone-copy">
-                  <strong>立即來電</strong>
-                  <small>(02) 7709-8229</small>
-                </span>
+                <span>(02) 7709-8229</span>
               </a>
             </div>
 
@@ -326,13 +323,13 @@ export default function Home() {
             </div>
 
             <div className="service-dialog__actions">
-              <a className="dialog-action dialog-action--phone" href="tel:0277098229">
+              <a className="dialog-action dialog-action--phone" href="tel:0277098229" aria-label="撥打電話 (02) 7709-8229">
                 <FaPhoneAlt aria-hidden="true" />
-                立即撥打 (02) 7709-8229
+                (02) 7709-8229
               </a>
               <a className="dialog-action dialog-action--line" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer">
                 <FaLine aria-hidden="true" />
-                開啟 LINE 課程諮詢
+                LINE 課程諮詢
               </a>
             </div>
           </div>
