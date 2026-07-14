@@ -1,98 +1,42 @@
-# vinext-starter
+# 橘子蘋果官網 Footer 改版提案
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+這是橘子蘋果程式學苑官網 Footer 的獨立互動原型，供內部討論資訊架構、視覺設計與轉換動線使用。
 
-## Prerequisites
+## 線上預覽
 
-- Node.js `>=22.13.0`
+[開啟 Footer 互動原型](https://orangeapple-footer-prototype.poshlin.chatgpt.site)
 
-## Quick Start
+> 目前預覽網站採私人權限；GitHub repository 用於檢視原始碼與版本差異。
+
+## 本版重點
+
+- LINE 僅保留一個主要諮詢入口，避免與社群圖示重複。
+- 課程導覽依家長決策需求整理，而不是放入所有網站頁面。
+- 家長專區集中諮詢、據點、FAQ、選課指南、學員作品與登入。
+- 品牌區集中關於橘蘋、內容觀點、社會責任、合作與招募。
+- 桌機固定展開三欄，手機改為可展開、收合的分類導覽。
+- 支援鍵盤操作、清楚焦點狀態、48px 以上觸控區與減少動態效果偏好。
+
+## 討論時建議聚焦
+
+1. 三組分類是否符合家長找資料的順序。
+2. 哪些連結應作為全站長期入口，而不是短期活動頁。
+3. LINE 諮詢與電話的主次是否符合實際客服策略。
+4. 是否採用「全台 12 縣市直營・線上覆蓋 22 縣市」作為長期信任訊號。
+
+## 本機預覽
+
+需要 Node.js 22.13 以上版本。
 
 ```bash
 npm install
 npm run dev
+```
+
+正式建置檢查：
+
+```bash
 npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
-
-## Included Shape
-
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
-```
-
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+主要頁面位於 `app/page.tsx`，樣式位於 `app/globals.css`。
