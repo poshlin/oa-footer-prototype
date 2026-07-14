@@ -325,7 +325,8 @@ export default function Home() {
         <div className="primary-nav">
           <div className="nav-container nav-shell">
             <a className="nav-logo" href="https://orangeapple.co/" aria-label="橘子蘋果程式學苑首頁">
-              <Image src="/logo-2023-white.svg" alt="橘子蘋果程式學苑" width={220} height={52} priority />
+              <Image className="nav-logo__hero" src="/logo-2023-white.svg" alt="橘子蘋果程式學苑" width={220} height={52} priority />
+              <Image className="nav-logo__solid" src="/logo-2023-color.png" alt="" width={176} height={41} aria-hidden="true" priority />
             </a>
 
             <button
