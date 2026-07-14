@@ -239,6 +239,7 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
 
 export default function Home() {
   const year = new Date().getFullYear();
+  const [isScrolled, setIsScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<"courses" | "camps" | "locations" | "parents" | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [lineDirectoryMode, setLineDirectoryMode] = useState<"physical" | "all">("physical");
@@ -258,6 +259,13 @@ export default function Home() {
   const toggleMenu = (menu: "courses" | "camps" | "locations" | "parents") => {
     setOpenMenu((current) => current === menu ? null : menu);
   };
+
+  useEffect(() => {
+    const syncHeaderState = () => setIsScrolled(window.scrollY > 56);
+    syncHeaderState();
+    window.addEventListener("scroll", syncHeaderState, { passive: true });
+    return () => window.removeEventListener("scroll", syncHeaderState);
+  }, []);
 
   useEffect(() => {
     const closeWithEscape = (event: KeyboardEvent) => {
@@ -313,18 +321,7 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header">
-        <div className="utility-bar">
-          <div className="nav-container utility-bar__inner">
-            <p><span aria-hidden="true">●</span> 全台 12 縣市・44 間教室・線上不限地區</p>
-            <nav aria-label="快速連結">
-              <a href="https://orangeapple.co/faq">常見問題</a>
-              <a href="https://orangeapple.co/contact">聯絡我們</a>
-              <a href="https://orangeapple.co/users/sign_in">家長／學員登入</a>
-            </nav>
-          </div>
-        </div>
-
+      <header className={`site-header ${isScrolled ? "is-scrolled" : "is-hero"}`}>
         <div className="primary-nav">
           <div className="nav-container nav-shell">
             <a className="nav-logo" href="https://orangeapple.co/" aria-label="橘子蘋果程式學苑首頁">
@@ -440,11 +437,39 @@ export default function Home() {
         <button className={`nav-backdrop ${mobileNavOpen ? "is-open" : ""}`} type="button" onClick={closeNavigation} aria-label="關閉主選單" tabIndex={mobileNavOpen ? 0 : -1} />
       </header>
 
-      <section className="preview-context" aria-label="頁面結尾示意">
-        <div className="preview-context__inner">
-          <span className="prototype-tag">NAV + FOOTER PROTOTYPE</span>
-          <p>請操作上方導覽選單，或向下檢視 Footer</p>
-          <span className="preview-arrow" aria-hidden="true">↓</span>
+      <section className="home-hero" aria-labelledby="hero-title">
+        <div className="home-hero__media" aria-hidden="true" />
+        <div className="nav-container home-hero__content">
+          <div className="home-hero__copy">
+            <span className="home-hero__eyebrow">PROGRAMMING · AI · MATHEMATICS</span>
+            <h1 id="hero-title">陪孩子寫下<br />改變未來的第一行程式</h1>
+            <p>從國小一年級到高中，依年級與程度找到真正適合的學習路徑。零經驗，也能從興趣開始。</p>
+            <div className="home-hero__actions">
+              <a className="hero-button hero-button--primary" href="https://orangeapple.co/contact">預約免費體驗 <span aria-hidden="true">→</span></a>
+              <a className="hero-button hero-button--secondary" href="https://orangeapple.co/courses">依年級探索課程</a>
+            </div>
+            <ul className="home-hero__proof" aria-label="橘子蘋果服務特色">
+              <li><strong>2012</strong><span>創立至今</span></li>
+              <li><strong>12 縣市</strong><span>全台實體教室</span></li>
+              <li><strong>不限地區</strong><span>線上即時教學</span></li>
+            </ul>
+          </div>
+        </div>
+        <div className="home-hero__scroll" aria-hidden="true"><span>向下捲動</span><i /></div>
+      </section>
+
+      <section className="nav-demo-section" aria-labelledby="nav-demo-title">
+        <div className="nav-container nav-demo-section__inner">
+          <div>
+            <span className="prototype-tag">STICKY NAVIGATION</span>
+            <h2 id="nav-demo-title">開始閱讀後，導覽回到清楚、穩定的實底模式</h2>
+          </div>
+          <p>選單內容與位置維持一致，只改變背景、文字顏色與高度。家長不必重新尋找功能，同時能在任何段落快速選課或預約體驗。</p>
+          <div className="nav-demo-cards" aria-label="導覽設計重點">
+            <article><span>01</span><strong>首頁首屏</strong><p>透明導覽融入 Hero，建立完整品牌第一印象。</p></article>
+            <article><span>02</span><strong>捲動閱讀</strong><p>自動轉為白色固定導覽，提升辨識與操作效率。</p></article>
+            <article><span>03</span><strong>一般內頁</strong><p>直接使用實底版本，讓資訊型頁面保持穩定清楚。</p></article>
+          </div>
         </div>
       </section>
 
