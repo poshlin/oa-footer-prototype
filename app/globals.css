@@ -396,21 +396,6 @@ summary:focus-visible {
   opacity: 1;
 }
 
-.indexed-link-content {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
-  align-items: center;
-  gap: 10px;
-}
-
-.link-index {
-  color: #d8deea;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
 .footer-bottom {
   min-height: 86px;
   display: grid;

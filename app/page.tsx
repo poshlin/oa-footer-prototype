@@ -14,15 +14,15 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 
-// 先依最低適用年級排序，讓家長能把這一欄當成選課索引。
+// 先依最低適用年級排序，讓家長能快速從年級找到對應課程。
 const courseLinks = [
   ["全部課程總覽", "https://orangeapple.co/courses"],
-  ["1–3 年級｜玩創程式啟蒙", "https://orangeapple.co/courses/kids-coding-foundations"],
-  ["1–5 年級｜麥思數學", "https://orangeapple.co/courses/math"],
-  ["1–12 年級｜寒暑假營隊", "https://orangeapple.co/camps"],
-  ["4–12 年級｜菁英程式課程", "https://orangeapple.co/courses"],
-  ["5 年級以上｜AI 思維實戰", "https://orangeapple.co/courses/ai-thinking/"],
-  ["5 年級以上｜進階程式學程", "https://orangeapple.co/courses/expert"],
+  ["1–3 年級：玩創程式啟蒙", "https://orangeapple.co/courses/kids-coding-foundations"],
+  ["1–5 年級：麥思數學", "https://orangeapple.co/courses/math"],
+  ["1–12 年級：寒暑假營隊", "https://orangeapple.co/camps"],
+  ["4–12 年級：菁英程式課程", "https://orangeapple.co/courses"],
+  ["5 年級以上：AI 思維實戰", "https://orangeapple.co/courses/ai-thinking/"],
+  ["5 年級以上：進階程式學程", "https://orangeapple.co/courses/expert"],
 ];
 
 const parentLinks = [
@@ -149,23 +149,11 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
         <span className="summary-icon" aria-hidden="true" />
       </summary>
       <ul>
-        {links.map(([label, href]) => {
-          const [indexLabel, linkLabel] = label.split("｜").map((part) => part.trim());
-          const isIndexedLink = Boolean(linkLabel);
-
-          return (
-            <li key={`${title}-${label}`}>
-              <a href={href} className={isIndexedLink ? "indexed-link" : undefined}>
-                {isIndexedLink ? (
-                  <span className="indexed-link-content">
-                    <span className="link-index">{indexLabel}</span>
-                    <span>{linkLabel}</span>
-                  </span>
-                ) : label}
-              </a>
-            </li>
-          );
-        })}
+        {links.map(([label, href]) => (
+          <li key={`${title}-${label}`}>
+            <a href={href}>{label}</a>
+          </li>
+        ))}
       </ul>
     </details>
   );
