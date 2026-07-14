@@ -9,6 +9,7 @@ import {
   FaInstagram,
   FaLaptop,
   FaLine,
+  FaMapMarkerAlt,
   FaPhoneAlt,
   FaTimes,
   FaYoutube,
@@ -201,16 +202,21 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
 
 export default function Home() {
   const year = new Date().getFullYear();
+  const [lineDirectoryMode, setLineDirectoryMode] = useState<"physical" | "all">("physical");
   const serviceDialogRef = useRef<HTMLDialogElement>(null);
   const serviceHoursTriggerRef = useRef<HTMLButtonElement>(null);
   const lineDialogRef = useRef<HTMLDialogElement>(null);
-  const lineRoutingTriggerRef = useRef<HTMLButtonElement>(null);
+  const lineDirectoryTriggerRef = useRef<HTMLButtonElement>(null);
 
   const openServiceHours = () => serviceDialogRef.current?.showModal();
   const closeServiceHours = () => serviceDialogRef.current?.close();
-  const openLineRouting = () => lineDialogRef.current?.showModal();
+  const openPhysicalLineDirectory = () => {
+    setLineDirectoryMode("physical");
+    requestAnimationFrame(() => lineDialogRef.current?.showModal());
+  };
   const closeLineRouting = () => lineDialogRef.current?.close();
-  const openLineRoutingFromService = () => {
+  const openLineDirectoryFromService = (mode: "physical" | "all") => {
+    setLineDirectoryMode(mode);
     serviceDialogRef.current?.close();
     requestAnimationFrame(() => lineDialogRef.current?.showModal());
   };
@@ -247,23 +253,26 @@ export default function Home() {
             </p>
 
             <div className="contact-actions">
-              <button ref={lineRoutingTriggerRef} className="line-button" type="button" onClick={openLineRouting} aria-haspopup="dialog">
+              <a className="line-button" href="https://lin.ee/ZAqUzzy" target="_blank" rel="noopener noreferrer" aria-label="加入橘子蘋果官方 LINE @qcr5001z">
                 <FaLine aria-hidden="true" />
-                <span>LINE 課程諮詢</span>
-              </button>
+                <span>官方 LINE 諮詢</span>
+              </a>
               <a className="phone-link" href="tel:0277098229" aria-label="撥打電話 (02) 7709-8229">
                 <FaPhoneAlt aria-hidden="true" />
                 <span>(02) 7709-8229</span>
               </a>
             </div>
 
-            <div className="service-note">
-              <span>客服時段依課程類型而異</span>
-              <button ref={serviceHoursTriggerRef} type="button" onClick={openServiceHours}>
-                <FaClock aria-hidden="true" />
-                查看服務時間
+            <nav className="footer-tools" aria-label="客服快速連結">
+              <button ref={lineDirectoryTriggerRef} type="button" onClick={openPhysicalLineDirectory} aria-haspopup="dialog">
+                <FaMapMarkerAlt aria-hidden="true" />
+                查找各教室 LINE
               </button>
-            </div>
+              <button ref={serviceHoursTriggerRef} type="button" onClick={openServiceHours} aria-haspopup="dialog">
+                <FaClock aria-hidden="true" />
+                查看客服時間
+              </button>
+            </nav>
 
             <div className="social-area">
               <p className="social-heading">追蹤橘蘋</p>
@@ -353,7 +362,7 @@ export default function Home() {
                           ))}
                         </dl>
                         {channel.type === "line" && service.id === "onsite" && (
-                          <button className="service-channel__action" type="button" onClick={openLineRoutingFromService}>
+                          <button className="service-channel__action" type="button" onClick={() => openLineDirectoryFromService("physical")}>
                             選擇上課地區 LINE <span aria-hidden="true">→</span>
                           </button>
                         )}
@@ -374,9 +383,9 @@ export default function Home() {
                 <FaPhoneAlt aria-hidden="true" />
                 (02) 7709-8229
               </a>
-              <button className="dialog-action dialog-action--line" type="button" onClick={openLineRoutingFromService}>
+              <button className="dialog-action dialog-action--line" type="button" onClick={() => openLineDirectoryFromService("all")}>
                 <FaLine aria-hidden="true" />
-                選擇 LINE 諮詢
+                查找對應 LINE
               </button>
             </div>
           </div>
@@ -387,7 +396,7 @@ export default function Home() {
           className="service-dialog line-routing-dialog"
           aria-labelledby="line-dialog-title"
           aria-describedby="line-dialog-description"
-          onClose={() => lineRoutingTriggerRef.current?.focus()}
+          onClose={() => lineDirectoryTriggerRef.current?.focus()}
           onClick={(event) => {
             if (event.target === event.currentTarget) closeLineRouting();
           }}
@@ -396,22 +405,26 @@ export default function Home() {
             <header className="service-dialog__header">
               <div>
                 <span className="service-dialog__eyebrow">LINE DIRECTORY</span>
-                <h2 id="line-dialog-title">選擇 LINE 諮詢管道</h2>
-                <p id="line-dialog-description">依課程類型或上課地區，直接加入正確的客服帳號</p>
+                <h2 id="line-dialog-title">{lineDirectoryMode === "physical" ? "查找教室 LINE" : "選擇 LINE 諮詢管道"}</h2>
+                <p id="line-dialog-description">
+                  {lineDirectoryMode === "physical" ? "請依孩子預計上課的地區選擇" : "依課程類型或上課地區，直接加入正確的客服帳號"}
+                </p>
               </div>
               <button className="dialog-close" type="button" onClick={closeLineRouting} aria-label="關閉 LINE 諮詢管道">
                 <FaTimes aria-hidden="true" />
               </button>
             </header>
 
-            <a className="online-line-card" href={onlineLine.href} target="_blank" rel="noopener noreferrer">
-              <span className="online-line-card__icon"><FaLine aria-hidden="true" /></span>
-              <span className="online-line-card__copy">
-                <span><strong>{onlineLine.label}</strong><small>線上專用</small></span>
-                <span>不限地區・{onlineLine.account}</span>
-              </span>
-              <span className="online-line-card__arrow" aria-hidden="true">→</span>
-            </a>
+            {lineDirectoryMode === "all" && (
+              <a className="online-line-card" href={onlineLine.href} target="_blank" rel="noopener noreferrer">
+                <span className="online-line-card__icon"><FaLine aria-hidden="true" /></span>
+                <span className="online-line-card__copy">
+                  <span><strong>{onlineLine.label}</strong><small>線上專用</small></span>
+                  <span>不限地區・{onlineLine.account}</span>
+                </span>
+                <span className="online-line-card__arrow" aria-hidden="true">→</span>
+              </a>
+            )}
 
             <div className="line-route-intro">
               <h3>實體課程 LINE</h3>
