@@ -21,8 +21,8 @@ const courseLinks = [
   ["1–5 年級：麥思數學", "https://orangeapple.co/courses/math"],
   ["1–12 年級：寒暑假營隊", "https://orangeapple.co/camps"],
   ["4–12 年級：菁英程式課程", "https://orangeapple.co/courses"],
-  ["5 年級以上：AI 思維實戰", "https://orangeapple.co/courses/ai-thinking/"],
   ["5 年級以上：進階程式學程", "https://orangeapple.co/courses/expert"],
+  ["5 年級以上：AI 思維實戰", "https://orangeapple.co/courses/ai-thinking/"],
 ];
 
 const parentLinks = [
