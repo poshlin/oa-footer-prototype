@@ -10,6 +10,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 
+// 先依最低適用年級排序，讓家長能把這一欄當成選課索引。
 const courseLinks = [
   ["全部課程總覽", "https://orangeapple.co/courses"],
   ["1–3 年級｜玩創程式啟蒙", "https://orangeapple.co/courses/kids-coding-foundations"],
