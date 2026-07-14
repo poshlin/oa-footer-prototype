@@ -169,21 +169,21 @@ summary:focus-visible {
 }
 
 .contact-actions {
-  width: min(100%, 368px);
+  width: min(100%, 340px);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 
 .line-button,
 .phone-link {
-  min-height: 56px;
+  min-height: 50px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  border-radius: 14px;
-  font-size: 15px;
+  gap: 9px;
+  border-radius: 12px;
+  font-size: 14px;
   font-weight: 800;
   white-space: nowrap;
   text-decoration: none;
@@ -199,13 +199,15 @@ summary:focus-visible {
   background: #fff;
 }
 
+.line-button { cursor: pointer; }
+
 .line-button {
   box-shadow: 0 10px 30px rgba(6, 199, 85, 0.18);
 }
 
 .line-button svg {
   color: var(--line-green);
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .phone-link {
@@ -214,7 +216,7 @@ summary:focus-visible {
 
 .phone-link svg {
   color: var(--apple-red);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .line-button:hover {
@@ -436,7 +438,7 @@ summary:focus-visible {
   color: #fff;
 }
 
-body:has(.service-dialog[open]) {
+body:has(dialog[open]) {
   overflow: hidden;
 }
 
@@ -600,6 +602,17 @@ body:has(.service-dialog[open]) {
   font-size: 16px;
 }
 
+.service-channel__badge {
+  margin-left: auto;
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: #006d36;
+  background: #dcfce7;
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .schedule-list {
   display: grid;
   gap: 0;
@@ -636,6 +649,31 @@ body:has(.service-dialog[open]) {
   white-space: nowrap;
 }
 
+.service-channel__action {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 8px;
+  padding: 0 12px;
+  border: 1px solid #d8dde6;
+  border-radius: 11px;
+  color: #263142;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.service-channel__action:hover {
+  border-color: var(--line-green);
+  background: #f4fff8;
+  transform: translateY(-1px);
+}
+
 .service-dialog__actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -656,6 +694,7 @@ body:has(.service-dialog[open]) {
   font-weight: 900;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
   transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -688,6 +727,168 @@ body:has(.service-dialog[open]) {
 
 .dialog-action:hover {
   transform: translateY(-1px);
+}
+
+.line-routing-dialog {
+  width: min(940px, calc(100% - 32px));
+}
+
+.online-line-card {
+  min-height: 78px;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding: 14px 18px;
+  border: 1px solid #a7e8c0;
+  border-radius: 17px;
+  color: var(--ink);
+  background: linear-gradient(135deg, #f5fff8, #eafff2);
+  text-decoration: none;
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.online-line-card:hover {
+  border-color: var(--line-green);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(6, 199, 85, 0.13);
+}
+
+.online-line-card__icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #fff;
+  background: var(--line-green);
+  font-size: 22px;
+}
+
+.online-line-card__copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.online-line-card__copy > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.online-line-card__copy strong {
+  font-size: 16px;
+}
+
+.online-line-card__copy small {
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: #006d36;
+  background: #d8f9e3;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.online-line-card__copy > span:last-child {
+  color: #657082;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.online-line-card__arrow,
+.line-route-link__arrow {
+  color: #667085;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.line-route-intro {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 13px;
+}
+
+.line-route-intro h3 { font-size: 17px; }
+.line-route-intro p { color: #788291; font-size: 12px; }
+
+.line-route-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.line-route-group {
+  padding: 15px;
+  border: 1px solid #e1e5ec;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.line-route-group h4 {
+  margin: 0 0 10px;
+  color: #7a4a00;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.line-route-list {
+  display: grid;
+  gap: 7px;
+}
+
+.line-route-link {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto 14px;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: var(--ink);
+  background: #f6f8fa;
+  text-decoration: none;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.line-route-link > svg {
+  color: var(--line-green);
+  font-size: 16px;
+}
+
+.line-route-link:hover {
+  border-color: #a7e8c0;
+  background: #f4fff8;
+  transform: translateX(2px);
+}
+
+.line-route-link__copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.line-route-link__copy strong {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.line-route-link__copy small {
+  color: #747f90;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.line-route-link__account {
+  color: #586273;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .summary-icon {
@@ -852,6 +1053,18 @@ body:has(.service-dialog[open]) {
 
   .service-dialog__actions {
     grid-template-columns: 1fr;
+  }
+
+  .line-route-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .line-routing-dialog .service-dialog__panel {
+    padding-inline: 16px;
+  }
+
+  .line-route-link {
+    min-height: 60px;
   }
 }
 

@@ -64,6 +64,46 @@ const socials = [
   },
 ];
 
+const onlineLine = {
+  label: "線上課程專屬 LINE",
+  account: "@oaonline",
+  href: "https://oaoa.fun/6qhv3g",
+};
+
+const lineGroups = [
+  {
+    title: "雙北・基隆",
+    items: [
+      { label: "古亭", account: "@234rcqlb", href: "https://oaoa.fun/6qgmv4" },
+      { label: "東湖・港墘・基隆・天母", account: "@673zaoef", href: "https://oaoa.fun/6qgmvy" },
+      { label: "松山・新店・三峽・民權", account: "@336rhsya", href: "https://oaoa.fun/6qgmww" },
+      { label: "蘆洲・林口・新莊・樹林", account: "@674swuur", href: "https://oaoa.fun/6qgmy7" },
+      { label: "板橋・江翠・永和・土城", account: "@082rmpbn", href: "https://oaoa.fun/6qgmzf" },
+    ],
+  },
+  {
+    title: "桃竹・中部",
+    items: [
+      { label: "桃園區", locations: "中壢・桃園・南崁・青埔", account: "@vcm4747v", href: "https://oaoa.fun/6qgn26" },
+      { label: "新竹區", locations: "新竹・竹北", account: "@249sysoe", href: "https://oaoa.fun/6qgn39" },
+      { label: "台中區", locations: "北屯・南屯・大里・頭份", account: "@vtk2005q", href: "https://oaoa.fun/6qgn4t" },
+    ],
+  },
+  {
+    title: "嘉南・高屏",
+    items: [
+      { label: "嘉南區", locations: "台南復興・永康・嘉義・台南北區・台南南科・台南東區", account: "@iwk2198o", href: "https://oaoa.fun/6qgn5r" },
+      { label: "高屏區", locations: "左營・東光・五甲・文山・楠梓・屏東", account: "@ihk7130i", href: "https://oaoa.fun/6qgn6r" },
+    ],
+  },
+  {
+    title: "其他課程",
+    items: [
+      { label: "寒暑假營隊", account: "@586kgezv", href: "https://oaoa.fun/6qgmu6" },
+    ],
+  },
+];
+
 const serviceSchedules = [
   {
     id: "onsite",
@@ -83,7 +123,7 @@ const serviceSchedules = [
       },
       {
         type: "line",
-        label: "官方 LINE",
+        label: "實體課程 LINE（依教室）",
         rows: [["週二至週六", "12:00–21:00"]],
       },
     ],
@@ -104,7 +144,7 @@ const serviceSchedules = [
       },
       {
         type: "line",
-        label: "官方 LINE",
+        label: "線上課程專屬 LINE",
         rows: [
           ["週一至週五", "13:00–21:00"],
           ["週六、週日", "13:00–17:00"],
@@ -163,9 +203,17 @@ export default function Home() {
   const year = new Date().getFullYear();
   const serviceDialogRef = useRef<HTMLDialogElement>(null);
   const serviceHoursTriggerRef = useRef<HTMLButtonElement>(null);
+  const lineDialogRef = useRef<HTMLDialogElement>(null);
+  const lineRoutingTriggerRef = useRef<HTMLButtonElement>(null);
 
   const openServiceHours = () => serviceDialogRef.current?.showModal();
   const closeServiceHours = () => serviceDialogRef.current?.close();
+  const openLineRouting = () => lineDialogRef.current?.showModal();
+  const closeLineRouting = () => lineDialogRef.current?.close();
+  const openLineRoutingFromService = () => {
+    serviceDialogRef.current?.close();
+    requestAnimationFrame(() => lineDialogRef.current?.showModal());
+  };
 
   return (
     <main>
@@ -199,10 +247,10 @@ export default function Home() {
             </p>
 
             <div className="contact-actions">
-              <a className="line-button" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer" aria-label="前往 LINE 課程諮詢">
+              <button ref={lineRoutingTriggerRef} className="line-button" type="button" onClick={openLineRouting} aria-haspopup="dialog">
                 <FaLine aria-hidden="true" />
                 <span>LINE 課程諮詢</span>
-              </a>
+              </button>
               <a className="phone-link" href="tel:0277098229" aria-label="撥打電話 (02) 7709-8229">
                 <FaPhoneAlt aria-hidden="true" />
                 <span>(02) 7709-8229</span>
@@ -294,6 +342,7 @@ export default function Home() {
                         <h4 className={`service-channel__title service-channel__title--${channel.type}`}>
                           {channel.type === "phone" ? <FaPhoneAlt aria-hidden="true" /> : <FaLine aria-hidden="true" />}
                           {channel.label}
+                          {channel.type === "line" && service.id === "online" && <span className="service-channel__badge">線上專用</span>}
                         </h4>
                         <dl className="schedule-list">
                           {channel.rows.map(([days, hours]) => (
@@ -303,6 +352,16 @@ export default function Home() {
                             </div>
                           ))}
                         </dl>
+                        {channel.type === "line" && service.id === "onsite" && (
+                          <button className="service-channel__action" type="button" onClick={openLineRoutingFromService}>
+                            選擇上課地區 LINE <span aria-hidden="true">→</span>
+                          </button>
+                        )}
+                        {channel.type === "line" && service.id === "online" && (
+                          <a className="service-channel__action" href={onlineLine.href} target="_blank" rel="noopener noreferrer">
+                            加入 {onlineLine.account} <span aria-hidden="true">→</span>
+                          </a>
+                        )}
                       </section>
                     ))}
                   </div>
@@ -315,10 +374,76 @@ export default function Home() {
                 <FaPhoneAlt aria-hidden="true" />
                 (02) 7709-8229
               </a>
-              <a className="dialog-action dialog-action--line" href="https://oaoa.fun/6qhv3g" target="_blank" rel="noopener noreferrer">
+              <button className="dialog-action dialog-action--line" type="button" onClick={openLineRoutingFromService}>
                 <FaLine aria-hidden="true" />
-                LINE 課程諮詢
-              </a>
+                選擇 LINE 諮詢
+              </button>
+            </div>
+          </div>
+        </dialog>
+
+        <dialog
+          ref={lineDialogRef}
+          className="service-dialog line-routing-dialog"
+          aria-labelledby="line-dialog-title"
+          aria-describedby="line-dialog-description"
+          onClose={() => lineRoutingTriggerRef.current?.focus()}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeLineRouting();
+          }}
+        >
+          <div className="service-dialog__panel">
+            <header className="service-dialog__header">
+              <div>
+                <span className="service-dialog__eyebrow">LINE DIRECTORY</span>
+                <h2 id="line-dialog-title">選擇 LINE 諮詢管道</h2>
+                <p id="line-dialog-description">依課程類型或上課地區，直接加入正確的客服帳號</p>
+              </div>
+              <button className="dialog-close" type="button" onClick={closeLineRouting} aria-label="關閉 LINE 諮詢管道">
+                <FaTimes aria-hidden="true" />
+              </button>
+            </header>
+
+            <a className="online-line-card" href={onlineLine.href} target="_blank" rel="noopener noreferrer">
+              <span className="online-line-card__icon"><FaLine aria-hidden="true" /></span>
+              <span className="online-line-card__copy">
+                <span><strong>{onlineLine.label}</strong><small>線上專用</small></span>
+                <span>不限地區・{onlineLine.account}</span>
+              </span>
+              <span className="online-line-card__arrow" aria-hidden="true">→</span>
+            </a>
+
+            <div className="line-route-intro">
+              <h3>實體課程 LINE</h3>
+              <p>請依孩子預計上課的地區選擇</p>
+            </div>
+
+            <div className="line-route-groups">
+              {lineGroups.map((group) => (
+                <section className="line-route-group" key={group.title}>
+                  <h4>{group.title}</h4>
+                  <div className="line-route-list">
+                    {group.items.map((item) => (
+                      <a
+                        className="line-route-link"
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        key={`${group.title}-${item.label}`}
+                        aria-label={`加入 ${item.label} LINE ${item.account}`}
+                      >
+                        <FaLine aria-hidden="true" />
+                        <span className="line-route-link__copy">
+                          <strong>{item.label}</strong>
+                          {item.locations && <small>{item.locations}</small>}
+                        </span>
+                        <span className="line-route-link__account">{item.account}</span>
+                        <span className="line-route-link__arrow" aria-hidden="true">→</span>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              ))}
             </div>
           </div>
         </dialog>
