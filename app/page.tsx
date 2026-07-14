@@ -19,7 +19,7 @@ import {
 const courseLinks = [
   ["全部課程總覽", "https://orangeapple.co/courses"],
   ["1–3 年級：玩創程式啟蒙", "https://orangeapple.co/courses/kids-coding-foundations"],
-  ["1–5 年級：麥思數學", "https://orangeapple.co/courses/math"],
+  ["1–6 年級：麥思數學", "https://orangeapple.co/courses/math"],
   ["1–12 年級：寒暑假營隊", "https://orangeapple.co/camps"],
   ["4–12 年級：菁英程式課程", "https://orangeapple.co/courses"],
   ["5 年級以上：進階程式學程", "https://orangeapple.co/courses/expert"],
