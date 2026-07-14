@@ -12,12 +12,12 @@ import {
 
 const courseLinks = [
   ["全部課程總覽", "https://orangeapple.co/courses"],
-  ["低年級啟蒙｜1–3 年級", "https://orangeapple.co/courses/kids-coding-foundations"],
-  ["菁英程式｜4–12 年級", "https://orangeapple.co/courses"],
-  ["檢定與競賽｜ITS・APCS", "https://orangeapple.co/courses/expert"],
-  ["麥思數學｜1–5 年級", "https://orangeapple.co/courses/math"],
-  ["AI 思維實戰｜5 年級以上", "https://orangeapple.co/courses/ai-thinking/"],
-  ["寒暑假營隊", "https://orangeapple.co/camps"],
+  ["1–3 年級｜玩創程式啟蒙", "https://orangeapple.co/courses/kids-coding-foundations"],
+  ["1–5 年級｜麥思數學", "https://orangeapple.co/courses/math"],
+  ["1–12 年級｜寒暑假營隊", "https://orangeapple.co/camps"],
+  ["4–12 年級｜菁英程式課程", "https://orangeapple.co/courses"],
+  ["5 年級以上｜AI 思維實戰", "https://orangeapple.co/courses/ai-thinking/"],
+  ["5 年級以上｜進階程式學程", "https://orangeapple.co/courses/expert"],
 ];
 
 const parentLinks = [
@@ -94,11 +94,23 @@ function FooterGroup({ eyebrow, title, links }: FooterGroupProps) {
         <span className="summary-icon" aria-hidden="true" />
       </summary>
       <ul>
-        {links.map(([label, href]) => (
-          <li key={`${title}-${label}`}>
-            <a href={href}>{label}</a>
-          </li>
-        ))}
+        {links.map(([label, href]) => {
+          const [indexLabel, linkLabel] = label.split("｜").map((part) => part.trim());
+          const isIndexedLink = Boolean(linkLabel);
+
+          return (
+            <li key={`${title}-${label}`}>
+              <a href={href} className={isIndexedLink ? "indexed-link" : undefined}>
+                {isIndexedLink ? (
+                  <span className="indexed-link-content">
+                    <span className="link-index">{indexLabel}</span>
+                    <span>{linkLabel}</span>
+                  </span>
+                ) : label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </details>
   );
@@ -184,7 +196,7 @@ export default function Home() {
         <div className="footer-container footer-bottom">
           <p>© {year} 橘子蘋果程式學苑</p>
           <nav className="footer-presence" aria-label="服務地區">
-            <a href="https://orangeapple.co/classroom">全台 12 縣市直營・線上覆蓋 22 縣市</a>
+            <a href="https://orangeapple.co/classroom">全台 12 縣市直營｜線上課程不限地區</a>
           </nav>
           <nav aria-label="法律資訊">
             <a href="https://orangeapple.co/privacy">隱私權政策</a>
