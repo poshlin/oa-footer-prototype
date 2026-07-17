@@ -482,7 +482,7 @@ export default function Home() {
           <section className="brand-column" aria-label="橘子蘋果聯絡資訊">
             <a className="footer-logo" href="https://orangeapple.co/" aria-label="橘子蘋果程式學苑首頁">
               <Image
-                src="/logo-2023-white.svg"
+                src="/logo-2023-color.svg"
                 alt="橘子蘋果程式學苑"
                 width={280}
                 height={66}

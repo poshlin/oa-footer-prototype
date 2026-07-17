@@ -707,10 +707,14 @@ summary:focus-visible {
 }
 
 .site-footer {
+  --footer-text: #20242b;
+  --footer-muted: #5d626b;
+  --footer-dim: #666b74;
+  --footer-line: rgba(32, 36, 43, 0.18);
   position: relative;
   overflow: hidden;
   color: var(--footer-text);
-  background: var(--ink);
+  background: #e2ded8;
   isolation: isolate;
 }
 
@@ -726,8 +730,8 @@ summary:focus-visible {
   position: absolute;
   z-index: -2;
   inset: 0;
-  opacity: 0.2;
-  background-image: radial-gradient(rgba(255,255,255,0.18) 0.7px, transparent 0.7px);
+  opacity: 0.22;
+  background-image: radial-gradient(rgba(32, 36, 43, 0.2) 0.7px, transparent 0.7px);
   background-size: 22px 22px;
   mask-image: linear-gradient(to bottom, black, transparent 66%);
   content: "";
@@ -740,7 +744,7 @@ summary:focus-visible {
   height: 520px;
   border-radius: 50%;
   filter: blur(100px);
-  opacity: 0.12;
+  opacity: 0.16;
   pointer-events: none;
 }
 
@@ -893,7 +897,7 @@ summary:focus-visible {
 
 .footer-tools a:hover,
 .footer-tools button:hover {
-  color: #fff;
+  color: var(--ink);
 }
 
 .footer-tools a:hover svg,
@@ -923,10 +927,10 @@ summary:focus-visible {
   height: 48px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(32, 36, 43, 0.2);
   border-radius: 14px;
-  color: #fff;
-  background: rgba(255,255,255,0.06);
+  color: var(--ink);
+  background: rgba(255,255,255,0.34);
   font-size: 20px;
   text-decoration: none;
   transition: transform 180ms ease, color 180ms ease, background-color 180ms ease, border-color 180ms ease;
@@ -935,7 +939,7 @@ summary:focus-visible {
 .social-link:hover {
   transform: translateY(-3px);
   color: var(--ink);
-  border-color: transparent;
+  border-color: rgba(32, 36, 43, 0.08);
   background: #fff;
 }
 
@@ -980,7 +984,7 @@ summary:focus-visible {
 }
 
 .footer-group summary strong {
-  color: #fff;
+  color: var(--footer-text);
   font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -1023,7 +1027,7 @@ summary:focus-visible {
 }
 
 .footer-group li a:hover {
-  color: #fff;
+  color: var(--ink);
   transform: translateX(2px);
 }
 
@@ -1070,7 +1074,7 @@ summary:focus-visible {
 }
 
 .footer-bottom a:hover {
-  color: #fff;
+  color: var(--ink);
 }
 
 body:has(dialog[open]) {
