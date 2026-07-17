@@ -84,7 +84,7 @@ const navCourseGroups = [
 const socials = [
   {
     label: "Facebook",
-    href: "https://www.facebook.com/OrangeAppleTW",
+    href: "https://www.facebook.com/OrangeApplePad",
     icon: <FaFacebookF aria-hidden="true" />,
     className: "facebook",
   },
@@ -96,7 +96,7 @@ const socials = [
   },
   {
     label: "YouTube",
-    href: "https://www.youtube.com/@OrangeAppleTW",
+    href: "https://www.youtube.com/@orangeapple-academy",
     icon: <FaYoutube aria-hidden="true" />,
     className: "youtube",
   },
