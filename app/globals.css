@@ -707,14 +707,14 @@ summary:focus-visible {
 }
 
 .site-footer {
-  --footer-text: #20242b;
-  --footer-muted: #5d626b;
-  --footer-dim: #666b74;
-  --footer-line: rgba(32, 36, 43, 0.18);
+  --footer-text: #1d242c;
+  --footer-muted: #59636e;
+  --footer-dim: #68727d;
+  --footer-line: rgba(29, 36, 44, 0.16);
   position: relative;
   overflow: hidden;
   color: var(--footer-text);
-  background: #e2ded8;
+  background: #f3f5f6;
   isolation: isolate;
 }
 
@@ -727,25 +727,11 @@ summary:focus-visible {
 }
 
 .site-footer::after {
-  position: absolute;
-  z-index: -2;
-  inset: 0;
-  opacity: 0.22;
-  background-image: radial-gradient(rgba(32, 36, 43, 0.2) 0.7px, transparent 0.7px);
-  background-size: 22px 22px;
-  mask-image: linear-gradient(to bottom, black, transparent 66%);
-  content: "";
+  content: none;
 }
 
 .footer-glow {
-  position: absolute;
-  z-index: -1;
-  width: 520px;
-  height: 520px;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.16;
-  pointer-events: none;
+  display: none;
 }
 
 .footer-glow--orange {
