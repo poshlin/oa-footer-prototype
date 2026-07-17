@@ -325,8 +325,7 @@ export default function Home() {
         <div className="primary-nav">
           <div className="nav-container nav-shell">
             <a className="nav-logo" href="https://orangeapple.co/" aria-label="橘子蘋果程式學苑首頁">
-              <Image className="nav-logo__hero" src="/logo-2023-white.svg" alt="橘子蘋果程式學苑" width={220} height={52} priority />
-              <Image className="nav-logo__solid" src="/logo-2023-color.svg" alt="" width={175} height={34} aria-hidden="true" priority />
+              <Image src="/logo-2023-color.svg" alt="橘子蘋果程式學苑" width={196} height={46} priority />
             </a>
 
             <button
@@ -463,11 +462,11 @@ export default function Home() {
         <div className="nav-container nav-demo-section__inner">
           <div>
             <span className="prototype-tag">STICKY NAVIGATION</span>
-            <h2 id="nav-demo-title">開始閱讀後，導覽回到清楚、穩定的實底模式</h2>
+            <h2 id="nav-demo-title">柔和融入首屏，開始閱讀後自然轉為實底</h2>
           </div>
           <p>選單內容與位置維持一致，只改變背景、文字顏色與高度。家長不必重新尋找功能，同時能在任何段落快速選課或預約體驗。</p>
           <div className="nav-demo-cards" aria-label="導覽設計重點">
-            <article><span>01</span><strong>首頁首屏</strong><p>透明導覽融入 Hero，建立完整品牌第一印象。</p></article>
+            <article><span>01</span><strong>首頁首屏</strong><p>白色霧面導覽融入 Hero，彩色 Logo 與深色文字維持品牌辨識。</p></article>
             <article><span>02</span><strong>捲動閱讀</strong><p>自動轉為白色固定導覽，提升辨識與操作效率。</p></article>
             <article><span>03</span><strong>一般內頁</strong><p>直接使用實底版本，讓資訊型頁面保持穩定清楚。</p></article>
           </div>
