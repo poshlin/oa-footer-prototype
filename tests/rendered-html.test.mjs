@@ -24,5 +24,11 @@ test("server-renders the OrangeApple navigation prototype", async () => {
   assert.match(html, /陪孩子寫下/);
   assert.match(html, /STICKY NAVIGATION/);
   assert.match(html, /客服服務時間/);
+  assert.match(html, /非營隊時間/);
+  assert.match(html, /營隊時間/);
+  assert.match(html, /09:30–19:00/);
+  assert.match(html, /08:00–19:00/);
+  assert.match(html, /週一至週日/);
+  assert.match(html, /09:00–18:00/);
   assert.match(html, /查找教室 LINE/);
 });

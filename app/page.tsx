@@ -152,17 +152,29 @@ const serviceSchedules = [
       {
         type: "phone",
         label: "專線電話",
-        rows: [
-          ["週一", "12:00–18:00"],
-          ["週二至週五", "12:00–21:00"],
-          ["週六", "09:30–21:00"],
-          ["週日", "09:30–17:00"],
+        groups: [
+          {
+            label: "非營隊時間",
+            rows: [
+              ["週一至週五", "09:30–19:00"],
+              ["週六", "09:30–18:00"],
+              ["週日", "09:30–16:00"],
+            ],
+          },
+          {
+            label: "營隊時間",
+            rows: [
+              ["週一至週五", "08:00–19:00"],
+              ["週六", "09:30–18:00"],
+              ["週日", "09:30–16:00"],
+            ],
+          },
         ],
       },
       {
         type: "line",
         label: "實體課程 LINE（依教室）",
-        rows: [["週二至週六", "12:00–21:00"]],
+        rows: [["週一至週日", "09:00–18:00"]],
       },
     ],
   },
@@ -599,14 +611,32 @@ export default function Home() {
                           {channel.label}
                           {channel.type === "line" && service.id === "online" && <span className="service-channel__badge">線上專用</span>}
                         </h4>
-                        <dl className="schedule-list">
-                          {channel.rows.map(([days, hours]) => (
-                            <div key={`${days}-${hours}`}>
-                              <dt>{days}</dt>
-                              <dd>{hours}</dd>
-                            </div>
-                          ))}
-                        </dl>
+                        {"groups" in channel ? (
+                          <div className="schedule-groups">
+                            {channel.groups.map((group) => (
+                              <section key={group.label} className="schedule-group">
+                                <h5>{group.label}</h5>
+                                <dl className="schedule-list">
+                                  {group.rows.map(([days, hours]) => (
+                                    <div key={`${group.label}-${days}-${hours}`}>
+                                      <dt>{days}</dt>
+                                      <dd>{hours}</dd>
+                                    </div>
+                                  ))}
+                                </dl>
+                              </section>
+                            ))}
+                          </div>
+                        ) : (
+                          <dl className="schedule-list">
+                            {channel.rows.map(([days, hours]) => (
+                              <div key={`${days}-${hours}`}>
+                                <dt>{days}</dt>
+                                <dd>{hours}</dd>
+                              </div>
+                            ))}
+                          </dl>
+                        )}
                         {channel.type === "line" && service.id === "onsite" && (
                           <button
                             ref={onsiteLineTriggerRef}
