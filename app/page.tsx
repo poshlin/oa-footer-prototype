@@ -152,6 +152,7 @@ const serviceSchedules = [
       {
         type: "phone",
         label: "專線電話",
+        extension: "分機 22",
         groups: [
           {
             label: "非營隊時間",
@@ -187,6 +188,7 @@ const serviceSchedules = [
       {
         type: "phone",
         label: "專線電話",
+        extension: "分機 11",
         rows: [
           ["週一至週五", "13:00–21:00"],
           ["週六、週日", "10:00–17:00"],
@@ -517,6 +519,8 @@ export default function Home() {
               </a>
             </div>
 
+            <p className="contact-extensions">分機：線上 11<span aria-hidden="true">｜</span>實體 22<span aria-hidden="true">｜</span>總機請按 9</p>
+
             <nav className="footer-tools" aria-label="客服快速連結">
               <button ref={lineDirectoryTriggerRef} type="button" onClick={openPhysicalLineDirectory} aria-haspopup="dialog">
                 <FaMapMarkerAlt aria-hidden="true" />
@@ -609,6 +613,7 @@ export default function Home() {
                         <h4 className={`service-channel__title service-channel__title--${channel.type}`}>
                           {channel.type === "phone" ? <FaPhoneAlt aria-hidden="true" /> : <FaLine aria-hidden="true" />}
                           {channel.label}
+                          {channel.type === "phone" && "extension" in channel && <span className="service-channel__extension">{channel.extension}</span>}
                           {channel.type === "line" && service.id === "online" && <span className="service-channel__badge">線上專用</span>}
                         </h4>
                         {"groups" in channel ? (
@@ -660,9 +665,9 @@ export default function Home() {
             </div>
 
             <div className="service-dialog__actions">
-              <a className="dialog-action dialog-action--phone" href="tel:0277098229" aria-label="撥打電話 (02) 7709-8229">
+              <a className="dialog-action dialog-action--phone" href="tel:0277098229" aria-label="撥打電話 (02) 7709-8229，總機請按 9">
                 <FaPhoneAlt aria-hidden="true" />
-                (02) 7709-8229
+                <span>(02) 7709-8229 <small>總機請按 9</small></span>
               </a>
               <button
                 ref={serviceLineTriggerRef}

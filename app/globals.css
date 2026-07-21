@@ -846,6 +846,21 @@ summary:focus-visible {
   box-shadow: 0 12px 30px rgba(255, 88, 89, 0.22);
 }
 
+.contact-extensions {
+  width: min(100%, 312px);
+  margin: 10px 0 0;
+  color: var(--footer-dim);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.contact-extensions span {
+  padding-inline: 3px;
+  color: #a6afb9;
+}
+
 .footer-tools {
   width: min(100%, 312px);
   display: flex;
@@ -1269,6 +1284,17 @@ body:has(dialog[open]) {
   white-space: nowrap;
 }
 
+.service-channel__extension {
+  margin-left: auto;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: #a4252c;
+  background: #ffe7e8;
+  font-size: 10px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .schedule-list {
   display: grid;
   gap: 0;
@@ -1372,6 +1398,18 @@ body:has(dialog[open]) {
   text-decoration: none;
   cursor: pointer;
   transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.dialog-action--phone > span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.dialog-action--phone small {
+  color: #6b7280;
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .dialog-action--phone,
