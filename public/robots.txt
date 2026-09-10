@@ -1,0 +1,3 @@
+# 內部設計提案原型，請勿收錄
+User-agent: *
+Disallow: /

@@ -29,6 +29,10 @@ for (const route of ROUTES) {
       .replace(/imageSrcSet="\/(?!\/)/g, `imageSrcSet="${BASE}/`)
       .replace(/srcSet="\/(?!\/)/g, `srcSet="${BASE}/`);
   }
+  // 保險層：內部提案頁一律 noindex，即使將來有人動了 layout 的 metadata
+  if (!/name="robots"/.test(html)) {
+    html = html.replace("</head>", '<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"/></head>');
+  }
   const out = path.join("dist/client", route === "/" ? "index.html" : `${route.replace(/^\//, "")}/index.html`);
   await writeFile(out, html, "utf8");
   console.log(`✓ ${route} → ${out}  ${html.length.toLocaleString()} 字元${BASE ? `（base: ${BASE}）` : ""}`);
