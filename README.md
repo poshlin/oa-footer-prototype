@@ -4,9 +4,28 @@
 
 ## 線上預覽
 
-[開啟 Footer 互動原型](https://orangeapple-footer-prototype.poshlin.chatgpt.site)
+**[開啟 Footer 互動原型](https://poshlin.github.io/oa-footer-prototype/)** ← 以此為準
 
-> 目前預覽網站採私人權限；GitHub repository 用於檢視原始碼與版本差異。
+推送到 `main` 後由 GitHub Actions 自動建置並部署，網址不變。
+內部提案頁，已設 `noindex` 與 `robots.txt`，不希望被搜尋引擎收錄。
+
+<details>
+<summary>部署是怎麼運作的</summary>
+
+這個原型是 SSR（vinext + Cloudflare Workers），而 GitHub Pages 只吃靜態檔，所以流程多兩步：
+
+1. `PAGES_BASE=/oa-footer-prototype/ npm run build` — Pages 的專案站掛在子路徑底下，
+   資源路徑要帶前綴才載得到。不設這個變數時 `base` 為 `/`。
+2. `node build/prerender.mjs` — 把 SSR 的首頁預先渲染成 `dist/client/index.html`。
+   新增頁面時要把路徑加進該檔的 `ROUTES`。
+3. `dist/client` 整包上傳為 Pages artifact。
+
+設定在 `.github/workflows/pages.yml`。
+
+另有一個舊的 OpenAI Sites 預覽站（`orangeapple-footer-prototype.poshlin.chatgpt.site`），
+它走自己的部署流程，**push 到 GitHub 不會更新它**，且不設 `PAGES_BASE` 所以路徑維持根目錄。
+兩條路互不影響，但內容會分歧，以 GitHub Pages 這條為準。
+</details>
 
 ## 本版重點
 
