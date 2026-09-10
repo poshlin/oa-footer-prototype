@@ -28,8 +28,14 @@ test("server-renders the OrangeApple navigation prototype", async () => {
   assert.match(html, /營隊時間/);
   assert.match(html, /09:30–19:00/);
   assert.match(html, /08:00–19:00/);
-  assert.match(html, /週一至週日/);
-  assert.match(html, /09:00–18:00/);
+  // 實體 LINE 2026-09-10 由「週一至週日 09:00–18:00」改為與實體專線同三段時間
+  assert.match(html, /09:30–18:00/);
+  assert.match(html, /09:30–16:00/);
+  assert.match(html, /北投教室、新莊魔力未設地區 LINE，請改撥專線分機 22。/);
+  // 南崁教室已停營，桃園區群組名不得再出現
+  assert.doesNotMatch(html, /南崁/);
+  // 舊的實體 LINE 時段不得復活
+  assert.doesNotMatch(html, /09:00–18:00/);
   assert.match(html, /分機 11/);
   assert.match(html, /分機 22/);
   assert.match(html, /總機請按 9/);

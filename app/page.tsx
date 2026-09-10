@@ -122,7 +122,7 @@ const lineGroups = [
   {
     title: "桃竹・中部",
     items: [
-      { label: "桃園區", locations: "中壢・桃園・南崁・青埔", account: "@vcm4747v", href: "https://oaoa.fun/6qgn26" },
+      { label: "桃園區", locations: "中壢・桃園・青埔", account: "@vcm4747v", href: "https://oaoa.fun/6qgn26" },
       { label: "新竹區", locations: "新竹・竹北", account: "@249sysoe", href: "https://oaoa.fun/6qgn39" },
       { label: "台中區", locations: "北屯・南屯・大里・頭份", account: "@vtk2005q", href: "https://oaoa.fun/6qgn4t" },
     ],
@@ -175,7 +175,11 @@ const serviceSchedules = [
       {
         type: "line",
         label: "實體課程 LINE（依教室）",
-        rows: [["週一至週日", "09:00–18:00"]],
+        rows: [
+          ["週一至週五", "09:30–19:00"],
+          ["週六", "09:30–18:00"],
+          ["週日", "09:30–16:00"],
+        ],
       },
     ],
   },
@@ -641,6 +645,11 @@ export default function Home() {
                               </div>
                             ))}
                           </dl>
+                        )}
+                        {channel.type === "line" && service.id === "onsite" && (
+                          <p className="service-channel__note">
+                            北投教室、新莊魔力未設地區 LINE，請改撥專線分機 22。
+                          </p>
                         )}
                         {channel.type === "line" && service.id === "onsite" && (
                           <button

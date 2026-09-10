@@ -1351,6 +1351,13 @@ body:has(dialog[open]) {
   white-space: nowrap;
 }
 
+.service-channel__note {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #5b6675;
+}
+
 .service-channel__action {
   min-height: 44px;
   display: flex;
