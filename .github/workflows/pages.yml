@@ -1,0 +1,55 @@
+# push 到 main 就自動建置並更新 GitHub Pages。
+# 這是這個原型的權威部署路徑；OpenAI Sites 那邊是另一條獨立的路，兩者互不觸發。
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.13"
+          cache: npm
+
+      - run: npm ci
+
+      # PAGES_BASE 讓資源路徑帶上 /oa-footer-prototype/ 前綴。
+      # 不設這個變數時 base 為 "/"，OpenAI Sites 的部署不受影響。
+      - name: Build
+        run: npm run build
+        env:
+          PAGES_BASE: /oa-footer-prototype/
+
+      # 這個原型是 SSR，Pages 只吃靜態檔，所以把首頁預先渲染成 index.html
+      - name: Prerender static HTML
+        run: node build/prerender.mjs
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/client
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

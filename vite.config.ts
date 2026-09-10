@@ -44,6 +44,9 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
+    // GitHub Pages 的專案站掛在 /<repo>/ 底下，資源路徑要有前綴才載得到。
+    // 用環境變數控制，OpenAI Sites 那邊不設就維持 root，兩種部署互不影響。
+    base: process.env.PAGES_BASE ?? "/",
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
